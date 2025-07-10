@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Paradiso</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
+<body onload="
+getMovies(); 
+getFoods(); 
+getCustomers(); 
+getRooms(); 
+getEmployees(); 
+getScreenings(); 
+getTickets(); 
+getReservations(); 
+getFoodPurchases();
+getShifts();
+">
+
+    <div class="main-content">
+
+        <header class="header">
+            <div class="container">
+                <a href="index.html" class="">
+                    <img src="images/logo.png" alt="" class="logo">
+                </a>
+                <nav class="nav">
+                    <a href="index.html">Inicio</a>
+                    <a href="cartelera.html">Cartelera</a>
+                    <a href="comida.html">Comidas</a>
+                    <a href="funcion.html">Funciones</a>
+                    <a href="admin.html">Administrador</a>
+                </nav>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <!-- Sidebar / Menú Lateral -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Panel de Control</h2>
+                </div>
+                <ul class="menu-items">
+                    <li class="menu-item active" onclick="showPanel('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Informe General
+                    </li>
+                    <li class="menu-item" onclick="showPanel('movies')">
+                        <i class="fas fa-film"></i> Películas
+                    </li>
+                    <li class="menu-item" onclick="showPanel('foods')">
+                        <i class="fas fa-utensils"></i> Comidas
+                    </li>
+                    <li class="menu-item" onclick="showPanel('customers')">
+                        <i class="fas fa-users"></i> Clientes
+                    </li>
+                    <li class="menu-item" onclick="showPanel('rooms')">
+                        <i class="fas fa-door-open"></i> Salas
+                    </li>
+                    <li class="menu-item" onclick="showPanel('employees')">
+                        <i class="fas fa-user-tie"></i> Empleados
+                    </li>
+                    <li class="menu-item" onclick="showPanel('screenings')">
+                        <i class="fas fa-calendar-alt"></i> Funciones
+                    </li>
+                    <li class="menu-item" onclick="showPanel('tickets')">
+                        <i class="fas fa-ticket-alt"></i> Boletos
+                    </li>
+                    <li class="menu-item" onclick="showPanel('reservations')">
+                        <i class="fas fa-bookmark"></i> Reservas
+                    </li>
+                    <li class="menu-item" onclick="showPanel('foodpurchases')">
+                        <i class="fas fa-shopping-cart"></i> Compras de Comida
+                    </li>
+                    <li class="menu-item" onclick="showPanel('employeeshifts')">
+                        <i class="fas fa-clock"></i> Turnos de Empleados
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Panel Principal -->
+            <div class="main-panel">
+
+                <!-- Dashboard Panel -->
+                <div id="dashboard" class="content-panel active">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Visualización de registros</h2>
+                    </div>
+
+                    <div class="contador-panel">
+                        <p>Total de Películas: <span id="contadorPeliculas">0</span></p>
+                        <p>Total de Comidas: <span id="contadorComidas">0</span></p>
+                        <p>Total de Clientes: <span id="contadorClientes">0</span></p>
+                        <p>Total de Salas: <span id="contadorSalas">0</span></p>
+                        <p>Total de Empleados: <span id="contadorEmpleados">0</span></p>
+                        <p>Total de Funciones: <span id="contadorFunciones">0</span></p>
+                        <p>Total de Boletos: <span id="contadorBoletos">0</span></p>
+                        <p>Total de Reservas: <span id="contadorReservas">0</span></p>
+                        <p>Total de Compras de Comida: <span id="contadorCompras">0</span></p>
+                        <p>Total de Turnos de Empleados: <span id="contadorTurnos">0</span></p>
+                    </div>
+                </div>
+
+                <!-- Movies Panel -->
+                <div id="movies" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Películas</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar" placeholder="Buscar">
+                            </div>
+                            <button id="agregarPeliculaBtn" class="btn-agregar-pelicula">Agregar Película</button>
+                        </div>
+                    </div>
+
+                    <section class="movies-grid" id="cartelera-grid">
+                        <!-- El contenido de las películas se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Foods Panel -->
+                <div id="foods" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Comidas</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-comida" placeholder="Buscar">
+                            </div>
+                            <button id="agregarComidaBtn" class="btn-agregar-comida">Agregar Comida</button>
+                        </div>
+                    </div>
+
+                    <section class="foods-grid" id="comidas-grid">
+                        <!-- El contenido de las comidas se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Customers Panel -->
+                <div id="customers" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Clientes</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-cliente" placeholder="Buscar">
+                            </div>
+                            <button id="agregarClienteBtn" class="btn-agregar-cliente">Agregar Cliente</button>
+                        </div>
+                    </div>
+
+                    <section class="customers-grid" id="clientes-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Rooms Panel -->
+                <div id="rooms" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Salas</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-sala" placeholder="Buscar">
+                            </div>
+                            <button id="agregarSalaBtn" class="btn-agregar-sala">Agregar Sala</button>
+                        </div>
+                    </div>
+
+                    <section class="rooms-grid" id="salas-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Employees Panel -->
+                <div id="employees" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Empleados</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-empleado" placeholder="Buscar">
+                            </div>
+                            <button id="agregarEmpleadoBtn" class="btn-agregar-empleado">Agregar Empleado</button>
+                        </div>
+                    </div>
+
+                    <section class="employees-grid" id="empleados-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Functions Panel -->
+                <div id="screenings" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Funciones</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-funcion" placeholder="Buscar">
+                            </div>
+                            <button id="agregarFuncionBtn" class="btn-agregar-funcion">Agregar Funcion</button>
+                        </div>
+                    </div>
+
+                    <section class="screenings-grid" id="funciones-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Tickets Panel -->
+                <div id="tickets" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Boletos</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-boleto" placeholder="Buscar">
+                            </div>
+                            <button id="agregarBoletoBtn" class="btn-agregar-boleto">Agregar Boleto</button>
+                        </div>
+                    </div>
+
+                    <section class="tickets-grid" id="boletos-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Reservations Panel -->
+                <div id="reservations" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Reservas</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-reserva" placeholder="Buscar">
+                            </div>
+                            <button id="agregarReservaBtn" class="btn-agregar-reserva">Agregar Reserva</button>
+                        </div>
+                    </div>
+
+                    <section class="reservations-grid" id="reservas-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Foodpurchase Panel -->
+                <div id="foodpurchases" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Compras de Comida</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-compra" placeholder="Buscar">
+                            </div>
+                            <button id="agregarCompraBtn" class="btn-agregar-compra">Agregar Compras</button>
+                        </div>
+                    </div>
+
+                    <section class="foodpurchases-grid" id="compras-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+                <!-- Employeeshift Panel -->
+                <div id="employeeshifts" class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Gestión de Turno de Empleados</h2>
+                        <div class="panel-actions">
+                            <div class="search-wrapper">
+                                <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                                <input type="text" class="search-bar-turno" placeholder="Buscar">
+                            </div>
+                            <button id="agregarTurnoBtn" class="btn-agregar-turno">Agregar Turnos</button>
+                        </div>
+                    </div>
+
+                    <section class="shifts-grid" id="turnos-grid">
+                        <!-- El contenido de los empleados se cargará dinámicamente -->
+                    </section>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- ******************** MODALES ******************** -->
+        <section>
+            <!-- Modal Agregar Pelicula -->
+            <div id="modalAgregarPelicula" class="modal-agregar-pelicula">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Película</h2>
+
+                    <div class="form-grupo">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                        <span class="error-text" id="errorTitulo"></span>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" required></textarea>
+                        <span class="error-text" id="errorDescripcion"></span>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="genero">Género</label>
+                        <input type="text" id="genero" name="genero" required>
+                        <span class="error-text" id="errorGenero"></span>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="duracion">Duración (minutos)</label>
+                        <input type="number" id="duracion" name="duracion" required>
+                        <span class="error-text" id="errorDuracion"></span>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="urlImagen">URL de la Imagen</label>
+                        <input type="url" id="urlImagen" name="urlImagen" required>
+                        <span class="error-text" id="errorUrl"></span>
+                    </div>
+
+                    <button type="button" class="btn-guardar" onclick="validarYRegistrar()">Guardar
+                        Película</button>
+                </div>
+            </div>
+
+            <!-- Modal Editar Película -->
+            <div id="modalEditarPelicula" class="modal-agregar-pelicula">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Película</h2>
+                    <form id="formEditarPelicula">
+                        <input type="hidden" id="editarPeliculaId">
+
+                        <div class="form-grupo">
+                            <label for="editarTitulo">Título</label>
+                            <input type="text" id="editarTitulo" required>
+                            <span class="error-text" id="errorEditarTitulo"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarDescripcion">Descripción</label>
+                            <textarea id="editarDescripcion" required></textarea>
+                            <span class="error-text" id="errorEditarDescripcion"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarGenero">Género</label>
+                            <input type="text" id="editarGenero" required>
+                            <span class="error-text" id="errorEditarGenero"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarDuracion">Duración (minutos)</label>
+                            <input type="number" id="editarDuracion" required>
+                            <span class="error-text" id="errorEditarDuracion"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarUrlImagen">URL de la Imagen</label>
+                            <input type="url" id="editarUrlImagen" required>
+                            <span class="error-text" id="errorEditarUrl"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditar()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Comidas -->
+            <div id="modalAgregarComida" class="modal-agregar-comida">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Comida</h2>
+                    <form id="formAgregarComida">
+
+                        <div class="form-grupo">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                            <span class="error-text" id="errorNombre"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="precio">Precio</label>
+                            <input type="number" id="precio" name="precio" required>
+                            <span class="error-text" id="errorPrecio"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="urlImagenComida">URL de la Imagen</label>
+                            <input type="url" id="urlImagenComida" name="urlImagenComida" required>
+                            <span class="error-text" id="errorUrlComida"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarComida()">Guardar</button>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Comidas -->
+            <div id="modalEditarComida" class="modal-agregar-comida">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Comida</h2>
+                    <form id="formEditarComida">
+                        <input type="hidden" id="editarComidaId">
+
+                        <div class="form-grupo">
+                            <label for="editarNombre">Nombre</label>
+                            <input type="text" id="editarNombre" required>
+                            <span class="error-text" id="errorEditarNombre"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarPrecio">Precio</label>
+                            <input type="number" id="editarPrecio" required>
+                            <span class="error-text" id="errorEditarPrecio"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarUrlImagenComida">URL de la Imagen</label>
+                            <input type="url" id="editarUrlImagenComida" required>
+                            <span class="error-text" id="errorEditarUrlComida"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarComida()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Clientes -->
+            <div id="modalAgregarCliente" class="modal-agregar-cliente">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nuevo Cliente</h2>
+                    <form id="formAgregarCliente">
+
+                        <div class="form-grupo">
+                            <label for="cliente">Nombre</label>
+                            <input type="text" id="cliente" name="cliente" required>
+                            <span class="error-text" id="errorCliente"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="correo">Correo</label>
+                            <input type="email" id="correo" name="correo" required>
+                            <span class="error-text" id="errorCorreo"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="contrasena">Contraseña</label>
+                            <input type="text" id="contrasena" name="contrasena" required>
+                            <span class="error-text" id="errorContrasena"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarCliente()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Clientes -->
+            <div id="modalEditarCliente" class="modal-agregar-cliente">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Cliente</h2>
+                    <form id="formEditarCliente">
+                        <input type="hidden" id="editarClienteId">
+
+                        <div class="form-grupo">
+                            <label for="editarCliente">Nombre</label>
+                            <input type="text" id="editarCliente" required>
+                            <span class="error-text" id="errorEditarCliente"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarCorreo">Correo</label>
+                            <input type="email" id="editarCorreo" required>
+                            <span class="error-text" id="errorEditarCorreo"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarContrasena">Contraseña</label>
+                            <input type="text" id="editarContrasena" required>
+                            <span class="error-text" id="errorEditarContrasena"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarCliente()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Salas -->
+            <div id="modalAgregarSala" class="modal-agregar-sala">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Sala</h2>
+                    <form id="formAgregarSala">
+
+                        <div class="form-grupo">
+                            <label for="sala">Número de Sala</label>
+                            <input type="number" id="sala" name="sala" required>
+                            <span class="error-text" id="errorSala"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="capacidad">Capacidad de Sala</label>
+                            <input type="number" id="capacidad" name="capacidad" required>
+                            <span class="error-text" id="errorCapacidad"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarSala()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Salas -->
+            <div id="modalEditarSala" class="modal-agregar-sala">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Sala</h2>
+                    <form id="formEditarSala">
+                        <input type="hidden" id="editarSalaId">
+
+                        <div class="form-grupo">
+                            <label for="editarSala">Número de Sala</label>
+                            <input type="number" id="editarSala" required>
+                            <span class="error-text" id="errorEditarSala"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarCapacidad">Capacidad de Sala</label>
+                            <input type="number" id="editarCapacidad" required>
+                            <span class="error-text" id="errorEditarCapacidad"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarSala()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Empleados -->
+            <div id="modalAgregarEmpleado" class="modal-agregar-empleado">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nuevo Empleado</h2>
+                    <form id="formAgregarEmpleado">
+
+                        <div class="form-grupo">
+                            <label for="empleado">Nombre de Empleado</label>
+                            <input type="text" id="empleado" name="empleado" required>
+                            <span class="error-text" id="errorEmpleado"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="posicion">Posición del Empleado</label>
+                            <input type="text" id="posicion" name="posicion" required>
+                            <span class="error-text" id="errorPosicion"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarEmpleado()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Empleados -->
+            <div id="modalEditarEmpleado" class="modal-agregar-empleado">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Empleado</h2>
+                    <form id="formEditarEmpleado">
+                        <input type="hidden" id="editarEmpleadoId">
+
+                        <div class="form-grupo">
+                            <label for="editarEmpleado">Nombre de Empleado</label>
+                            <input type="text" id="editarEmpleado" required>
+                            <span class="error-text" id="errorEditarEmpleado"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarPosicion">Posición del Empleado</label>
+                            <input type="text" id="editarPosicion" required>
+                            <span class="error-text" id="errorEditarPosicion"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarEmpleado()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Función -->
+            <div id="modalAgregarFuncion" class="modal-agregar-funcion">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Función</h2>
+                    <form id="formAgregarFuncion">
+                        <div class="form-grupo">
+                            <label for="selectPelicula">Película</label>
+                            <select id="selectPelicula" name="selectPelicula" required>
+                                <option value="">Seleccionar película...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorPelicula"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="selectSala">Sala</label>
+                            <select id="selectSala" name="selectSala" required>
+                                <option value="">Seleccionar sala...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorSala"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                            <span class="error-text" id="errorFecha"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarFuncion()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Función -->
+            <div id="modalEditarFuncion" class="modal-agregar-funcion">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Función</h2>
+                    <form id="formEditarFuncion">
+                        <input type="hidden" id="editarFuncionId">
+
+                        <div class="form-grupo">
+                            <label for="editarSelectPelicula">Película</label>
+                            <select id="editarSelectPelicula" required>
+                                <option value="">Seleccionar película...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarPelicula"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarSelectSala">Sala</label>
+                            <select id="editarSelectSala" required>
+                                <option value="">Seleccionar sala...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarSala"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarFecha">Fecha</label>
+                            <input type="date" id="editarFecha" required>
+                            <span class="error-text" id="errorEditarFecha"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarFuncion()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Boleto -->
+            <div id="modalAgregarBoleto" class="modal-agregar-boleto">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nuevo Boleto</h2>
+                    <form id="formAgregarBoleto">
+                        <div class="form-grupo">
+                            <label for="selectBoleto">Boleto</label>
+                            <select id="selectBoleto" name="selectBoleto" required>
+                                <option value="">Seleccionar boleto...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorBoleto"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="selectFuncion">Función</label>
+                            <select id="selectFuncion" name="selectFuncion" required>
+                                <option value="">Seleccionar función...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorFuncion"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="precioBoleto">Precio</label>
+                            <input type="number" id="precioBoleto" name="precioBoleto" required>
+                            <span class="error-text" id="errorPrecioBoleto"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarBoleto()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Boleto -->
+            <div id="modalEditarBoleto" class="modal-agregar-boleto">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Boleto</h2>
+                    <form id="formEditarBoleto">
+                        <input type="hidden" id="editarBoletoId">
+
+                        <div class="form-grupo">
+                            <label for="editarSelectBoleto">Boleto</label>
+                            <select id="editarSelectBoleto" required>
+                                <option value="">Seleccionar Boleto...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarBoleto"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarSelectFuncion">Función</label>
+                            <select id="editarSelectFuncion" required>
+                                <option value="">Seleccionar función...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarFuncion"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarPrecioBoleto">Precio</label>
+                            <input type="number" id="editarPrecioBoleto" required>
+                            <span class="error-text" id="errorEditarPrecioBoleto"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarBoleto()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Reserva -->
+            <div id="modalAgregarReserva" class="modal-agregar-reserva">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Reserva</h2>
+                    <form id="formAgregarReserva">
+                        <div class="form-grupo">
+                            <label for="selectReserva">Reserva</label>
+                            <select id="selectReserva" name="selectReserva" required>
+                                <option value="">Seleccionar reserva...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorReserva"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="selectFuncionReserva">Función</label>
+                            <select id="selectFuncionReserva" name="selectFuncionReserva" required>
+                                <option value="">Seleccionar función...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorFuncionReserva"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="cantidadBoletos">Cantidad de Boletos</label>
+                            <input type="number" id="cantidadBoletos" name="cantidadBoletos" required>
+                            <span class="error-text" id="errorCantidadBoletos"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarReserva()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Reserva -->
+            <div id="modalEditarReserva" class="modal-agregar-reserva">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Reserva</h2>
+                    <form id="formEditarReserva">
+                        <input type="hidden" id="editarReservaId">
+
+                        <div class="form-grupo">
+                            <label for="editarSelectReserva">Reserva</label>
+                            <select id="editarSelectReserva" required>
+                                <option value="">Seleccionar reserva...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarReserva"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarSelectFuncionReserva">Función</label>
+                            <select id="editarSelectFuncionReserva" required>
+                                <option value="">Seleccionar función...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarFuncionReserva"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarCantidadBoletos">Cantidad de Boletos</label>
+                            <input type="number" id="editarCantidadBoletos" required>
+                            <span class="error-text" id="errorEditarCantidadBoletos"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarReserva()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Compra -->
+            <div id="modalAgregarCompra" class="modal-agregar-compra">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nueva Compra de Comida</h2>
+                    <form id="formAgregarCompra">
+                        <div class="form-grupo">
+                            <label for="selectCompra">Cliente</label>
+                            <select id="selectCompra" name="selectCompra" required>
+                                <option value="">Seleccionar cliente...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorCompra"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="selectComida">Comida</label>
+                            <select id="selectComida" name="selectComida" required>
+                                <option value="">Seleccionar comida...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorComida"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="cantidadComida">Cantidad de Comida</label>
+                            <input type="number" id="cantidadComida" name="cantidadComida" required>
+                            <span class="error-text" id="errorCantidadComida"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarCompra()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Compra -->
+            <div id="modalEditarCompra" class="modal-agregar-compra">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Reserva</h2>
+                    <form id="formEditarCompra">
+                        <input type="hidden" id="editarCompraId">
+
+                        <div class="form-grupo">
+                            <label for="editarSelectCompra">Cliente</label>
+                            <select id="editarSelectCompra" required>
+                                <option value="">Seleccionar cliente...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarCompra"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarSelectComida">Comida</label>
+                            <select id="editarSelectComida" required>
+                                <option value="">Seleccionar comida...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarComida"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarCantidadComida">Cantidad de Comida</label>
+                            <input type="number" id="editarCantidadComida" required>
+                            <span class="error-text" id="errorEditarCantidadComida"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarCompra()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Agregar Turno -->
+            <div id="modalAgregarTurno" class="modal-agregar-turno">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-agregar">&times;</span>
+                    <h2>Añadir Nuevo Turno</h2>
+                    <form id="formAgregarTurno">
+                        <div class="form-grupo">
+                            <label for="selectTurno">Empleado</label>
+                            <select id="selectTurno" name="selectTurno" required>
+                                <option value="">Seleccionar empleado...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorTurno"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="selectFecha">Fecha de Turno</label>
+                            <input type="date" id="selectFecha" name="selectFecha" required>
+                            <span class="error-text" id="errorSelectFecha"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYRegistrarTurno()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Editar Turno -->
+            <div id="modalEditarTurno" class="modal-agregar-turno">
+                <div class="modal-contenido">
+                    <span class="cerrar-modal-editar">&times;</span>
+                    <h2>Editar Reserva</h2>
+                    <form id="formEditarTurno">
+                        <input type="hidden" id="editarTurnoId">
+
+                        <div class="form-grupo">
+                            <label for="editarSelectTurno">Turno</label>
+                            <select id="editarSelectTurno" required>
+                                <option value="">Seleccionar cliente...</option>
+                                <!-- Las opciones se cargarán dinámicamente desde JavaScript -->
+                            </select>
+                            <span class="error-text" id="errorEditarSelectTurno"></span>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="editarSelectFecha">Fecha de Turno</label>
+                            <input type="date" id="editarSelectFecha" name="editarSelectFecha" required>
+                            <span class="error-text" id="errorEditarSelectFecha"></span>
+                        </div>
+
+                        <button type="button" class="btn-guardar" onclick="validarYEditarTurno()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="">
+                <img src="images/logo.png" alt="" class="logo">
+            </a>
+        </div>
+        <div class="footer-copy">
+            © 2025 Cinema Paradiso
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/movie.js"></script>
+    <script src="js/food.js"></script>
+    <script src="js/customer.js"></script>
+    <script src="js/room.js"></script>
+    <script src="js/employee.js"></script>
+    <SCript src="js/screening.js"></SCript>
+    <script src="js/ticket.js"></script>
+    <script src="js/reservation.js"></script>
+    <script src="js/foodpurchase.js"></script>
+    <script src="js/employeeshift.js"></script>
+
+
+</body>
+
+</html>

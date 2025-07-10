@@ -1,0 +1,81 @@
+CREATE DATABASE Cinema;
+USE Cinema;
+
+CREATE TABLE Customer ( 
+    idCustomer INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(20) NOT NULL,
+);
+
+CREATE TABLE Movie (
+    idMovie INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    gender VARCHAR(100) NOT NULL,
+    duration INT NOT NULL,
+    imgUrl VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Room (
+    idRoom INT AUTO_INCREMENT PRIMARY KEY,
+    roomNumber INT NOT NULL UNIQUE,
+    capacity INT NOT NULL
+);
+
+CREATE TABLE Employee (
+    idEmployee INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    position VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Food (
+    idFood INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    price DECIMAL(8,2) NOT NULL
+    imgUrl VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Screening (
+    idScreening INT AUTO_INCREMENT PRIMARY KEY,
+    idMovie INT NOT NULL,
+    idRoom INT NOT NULL,
+    dateTime DATE NOT NULL,
+    FOREIGN KEY (idMovie) REFERENCES Movie(idMovie),
+    FOREIGN KEY (idRoom) REFERENCES Room(idRoom)
+);
+
+CREATE TABLE Ticket (
+    idTicket INT AUTO_INCREMENT PRIMARY KEY,
+    idCustomer INT NOT NULL,
+    idScreening INT NOT NULL,
+    price DECIMAL(8,2) NOT NULL,
+    FOREIGN KEY (idCustomer) REFERENCES Customer(idCustomer),
+    FOREIGN KEY (idScreening) REFERENCES Screening(idScreening)
+);
+
+CREATE TABLE Reservation (
+    idReservation INT AUTO_INCREMENT PRIMARY KEY,
+    idCustomer INT NOT NULL,
+    idScreening INT NOT NULL,
+    ticketQuantity INT NOT NULL,
+    FOREIGN KEY (idCustomer) REFERENCES Customer(idCustomer),
+    FOREIGN KEY (idScreening) REFERENCES Screening(idScreening)
+);
+
+CREATE TABLE FoodPurchase (
+    idPurchase INT AUTO_INCREMENT PRIMARY KEY,
+    idCustomer INT NOT NULL,
+    idFood INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (idCustomer) REFERENCES Customer(idCustomer),
+    FOREIGN KEY (idFood) REFERENCES Food(idFood)
+);
+
+CREATE TABLE EmployeeShift (
+    idShift INT AUTO_INCREMENT PRIMARY KEY,
+    idEmployee INT NOT NULL,
+    dateTime DATE NOT NULL,
+    FOREIGN KEY (idEmployee) REFERENCES Employee(idEmployee)
+);
+

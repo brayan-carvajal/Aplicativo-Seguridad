@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Paradiso</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
+<body onload="getMovies();">
+
+    <div class="main-content">
+
+        <header class="header">
+            <div class="container">
+                <a href="index.html" class="">
+                    <img src="images/logo.png" alt="" class="logo">
+                </a>
+                <nav class="nav">
+                    <a href="index.html">Inicio</a>
+                    <a href="cartelera.html">Cartelera</a>
+                    <a href="comida.html">Comidas</a>
+                    <a href="funcion.html">Funciones</a>
+                    <a href="admin.html">Administrador</a>
+                </nav>
+            </div>
+
+        </header>
+
+        <main>
+
+            <section class="movies-grid-section">
+
+                <h2 class="titulo-cartelera">En Cartelera</h2>
+
+                <div class="filters-container">
+                    <div class="search-wrapper">
+                        <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                        <input type="text" class="search-bar" placeholder="Buscar...">
+                    </div>
+                </div>
+
+                <section class="movies-grid">
+
+                    <!-- Aca van las peliculas -->
+
+                </section>
+
+            </section>
+
+        </main>
+
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="index.html" class="">
+                <img src="images/logo.png" alt="" class="logo">
+            </a>
+            <!--<div class="footer-links">
+                <a href="#">Información Legal</a>
+                <span>|</span>
+                <a href="#">Acerca de Cineco</a>
+            </div>
+            <div class="footer-social">
+                <p>Síguenos en redes sociales</p>
+                <a href="#"><img src="ruta-facebook.svg" alt="Facebook"></a>
+                <a href="#"><img src="ruta-twitter.svg" alt="Twitter"></a>
+                <a href="#"><img src="ruta-instagram.svg" alt="Instagram"></a>
+            </div>-->
+        </div>
+        <div class="footer-copy">
+            © 2025 Cinema Paradiso
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/movie.js"></script>
+
+    <script src="js/carteleras.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Paradiso</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body onload="getScreenings();">
+
+    <div class="main-content">
+
+        <header class="header">
+            <div class="container">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Cinema Paradiso" class="logo">
+                </a>
+                <nav class="nav">
+                    <a href="index.html">Inicio</a>
+                    <a href="cartelera.html">Cartelera</a>
+                    <a href="comida.html">Comidas</a>
+                    <a href="funcion.html">Funciones</a>
+                    <a href="admin.html">Administrador</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="movies-grid-section">
+
+                <h2 class="titulo-funciones">En Función</h2>
+
+                <div class="filters-container">
+                    <div class="search-wrapper">
+                        <img src="images/search_icon.svg" alt="Buscar" class="search-icon">
+                        <input type="text" class="search-bar-funcion" placeholder="Buscar..."
+                            oninput="getScreenings();">
+                    </div>
+                </div>
+
+                <section class="screenings-grid">
+                    <!-- Acá se cargan dinámicamente las funciones -->
+                </section>
+
+            </section>
+        </main>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Cinema Paradiso" class="logo">
+            </a>
+        </div>
+        <div class="footer-copy">
+            © 2025 Cinema Paradiso
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/screening.js"></script>
+    <script src="js/funciones.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+http://localhost:8080/api/auth/register
+
+{
+  "username": "admin",
+  "password": "123456",
+  "email": "admin@test.com",
+  "role": "ADMIN"
+}
+
+http://localhost:8080/api/auth/login
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+
+http://localhost:8080/api/auth/forgot-password
+{
+  "email": "usuario@test.com"
+}
+
+http://localhost:8080/api/auth/reset-password
+{
+  "token": "token-recibido-por-email",
+  "newPassword": "nuevaPassword123"
+}
+
+http://localhost:8080/api/auth/change-password
+Headers: Authorization: Bearer tu_token_aqui
+{
+  "currentPassword": "passwordActual",
+  "newPassword": "nuevaPassword123"
+}
+
+http://localhost:8080/api/auth/logout
+Headers: Authorization: Bearer tu_token_aqui
